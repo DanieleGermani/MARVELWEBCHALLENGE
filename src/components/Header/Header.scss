@@ -1,0 +1,37 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+  
+    .header-left {
+      .home-button {
+        font-size: 18px;
+        color: #007bff;
+        text-decoration: none;
+  
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  
+    .header-right {
+      .favorites-button {
+        font-size: 18px;
+        background: none;
+        border: none;
+        color: #007bff;
+        cursor: pointer;
+        padding: 0;
+        text-decoration: underline;
+  
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  

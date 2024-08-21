@@ -1,0 +1,13 @@
+.character-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .character-list {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+  }
+  
