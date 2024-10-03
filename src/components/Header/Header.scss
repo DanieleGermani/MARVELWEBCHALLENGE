@@ -1,0 +1,25 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #000000;
+    width: 100%;
+
+  
+    .header-left {
+      .home-button {
+        cursor: pointer;
+      }
+    }
+  
+    .header-right {
+      display: flex;
+      gap: 10px;
+      color: white;
+      .favorites-button {
+        cursor: pointer;
+      }
+    }
+  }
+  
