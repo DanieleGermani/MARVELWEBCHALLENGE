@@ -10,6 +10,7 @@ type CharacterListProps = {
 const CharacterList: React.FC<CharacterListProps> = ({ characters }) => {
   return (
     <div className="character-list">
+      <div>{characters.length} RESULTS</div>
       {characters.map(character => (
         <CharacterCard key={character.id} character={character} />
       ))}

@@ -14,10 +14,8 @@ export const getCharactersList = async (): Promise<ICharacter[]> => {
     if (cachedData) {
       return JSON.parse(cachedData);
     }
-    // el api va muy lento, nunca devuelve 50 items
-    // `${BASE_URL}/characters?ts=${ts}&apikey=${API_PUBLIC_KEY}&hash=${hash}&limit=50&offset=50`
     const response = await fetch(
-      `${BASE_URL}/characters?ts=${ts}&apikey=${API_PUBLIC_KEY}&hash=${hash}`
+      `${BASE_URL}/characters?ts=${ts}&apikey=${API_PUBLIC_KEY}&hash=${hash}&limit=50&offset=50`
     );
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
