@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGlobalState } from '../../context/GlobalState';
 import CharacterCard from '../CharacterCard/CharacterCard';
 import './Favorites.module.scss';
@@ -10,6 +10,10 @@ const Favorites: React.FC = () => {
   const { favorites } = useGlobalState();
   const [filteredFavorites, setFilteredFavorites] = useState<ICharacter[]>(favorites);
   const [searchTerm, setSearchTerm] = useState<string>("");
+
+  useEffect(() => {
+    setFilteredFavorites(favorites);
+  }, [favorites]);
 
   
   const handleSearchChange = (term: string) => {

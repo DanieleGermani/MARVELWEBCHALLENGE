@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "./CharacterDetail.module.scss";
 import { getComicsById } from "../../services/marvelApi";
 import { ICharacter } from "../../models/character.model";
 import Loading from "../../components/Loading/Loading";

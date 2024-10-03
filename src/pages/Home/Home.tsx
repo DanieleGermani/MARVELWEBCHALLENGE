@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import CharacterList from "../../components/CharacterList/CharacterList";
-import "./Home.module.scss";
 import { getCharactersList } from "../../services/marvelApi";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Loading from "../../components/Loading/Loading";
