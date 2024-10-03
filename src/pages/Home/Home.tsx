@@ -42,6 +42,7 @@ const Home: React.FC = () => {
   ) : (
     <div className="home">
       <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange} />
+      <div>{filteredCharacters.length} RESULTS</div>
       <CharacterList characters={filteredCharacters} />
     </div>
   );

@@ -1,39 +1,45 @@
-.character-card {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    text-align: center;
-    transition: transform 0.2s ease-in-out;
-  
-    &:hover {
-      transform: translateY(-5px);
-    }
-  
-    img {
+.characterCard {
+  overflow: hidden;
+  .imgContainer {
+    position: relative;
+    .characterImage {
       width: 100%;
-      border-radius: 8px;
-      margin-bottom: 12px;
-    }
-  
-    h3 {
-      font-size: 1.25rem;
-      color: #333;
-      margin-bottom: 8px;
-    }
-  
-    button {
-      background-color: #ff4500;
-      color: #ffffff;
-      border: none;
-      border-radius: 4px;
-      padding: 8px 12px;
+      height: 200px;
       cursor: pointer;
-      margin: 4px;
-  
-      &:hover {
-        background-color: #ff6347;
-      }
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--Marvel-red, #EC1D24);
     }
   }
   
+  .cardFooter {
+    padding: 10px; /* Espaciado interno */
+    background-color: #000; /* Fondo negro para el pie */
+    color: white; /* Texto blanco */
+    .characterName {
+      margin: 0; /* Sin margen */
+      font-size: 1.2em; /* Tamaño de la fuente */
+      color: white; /* Texto blanco */
+    }
+
+    .viewDetailsButton {
+      background-color: #ff0055; /* Color de fondo del botón */
+      color: white; /* Texto blanco */
+      border: none; /* Sin borde */
+      border-radius: 5px; /* Bordes redondeados */
+      padding: 8px 12px; /* Espaciado interno del botón */
+      cursor: pointer; /* Cursor de puntero */
+      transition: background-color 0.3s; /* Transición suave */
+
+      &:hover {
+        background-color: #e6004d; /* Color al pasar el mouse */
+      }
+    }
+  }
+}
