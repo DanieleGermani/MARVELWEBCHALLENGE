@@ -4,6 +4,7 @@ import Home from './pages/Home/Home';
 import CharacterDetail from './pages/CharacterDetail/CharacterDetail';
 import { GlobalStateProvider } from './context/GlobalState';
 import Header from './components/Header/Header';
+import './styles/global.scss';
 
 const App: React.FC = () => {
   return (

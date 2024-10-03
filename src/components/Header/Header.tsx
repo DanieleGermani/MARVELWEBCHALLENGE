@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import logo from '../../assets/images/logo.svg';
+import heart from '../../assets/icons/selected.svg';
 import { useGlobalState } from '../../context/GlobalState';
 import './Header.scss'; 
 
@@ -15,10 +17,11 @@ const Header: React.FC = () => {
   return (
     <header className="header">
       <div className="header-left">
-      <button className="home-button" onClick={() => handleNavigation(false)}>Home</button>
+      <img className="home-button" onClick={() => handleNavigation(false)} src={logo} alt="Logo" />
       </div>
       <div className="header-right">
-        <button onClick={() => handleNavigation(true)} className="home-button"> Favorites ({favorites.length})</button>
+        <img className="favorites-button" onClick={() => handleNavigation(true)} src={heart} alt="favorites" />
+        <div>{favorites.length}</div>
       </div>
     </header>
   );
