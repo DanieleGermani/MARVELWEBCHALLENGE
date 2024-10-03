@@ -8,6 +8,7 @@ interface GlobalStateContextType {
   setCharactersList: (charactersList: ICharacter[]) => void;
   addFavorite: (character: ICharacter) => void;
   removeFavorite: (id: number) => void;
+  setIsFavoriteSelected: (isFavoriteSelected: boolean) => void;
 }
 
 const GlobalStateContext = createContext<GlobalStateContextType | undefined>(undefined);

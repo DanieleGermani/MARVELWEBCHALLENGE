@@ -1,18 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGlobalState } from '../../context/GlobalState';
 import './Header.scss'; 
 
 const Header: React.FC = () => {
-  const { favorites } = useGlobalState();
+  const { favorites, setIsFavoriteSelected } = useGlobalState();
+  const navigate = useNavigate();
+
+  const handleNavigation = (isFavoriteClicked: boolean) => {
+    setIsFavoriteSelected(isFavoriteClicked);
+    navigate('/');
+  };
 
   return (
     <header className="header">
       <div className="header-left">
-        <Link to="/" className="home-button">Home</Link>
+      <button className="home-button" onClick={() => handleNavigation(false)}>Home</button>
       </div>
       <div className="header-right">
-        <button className="home-button"> Favorites ({favorites.length})</button>
+        <button onClick={() => handleNavigation(true)} className="home-button"> Favorites ({favorites.length})</button>
       </div>
     </header>
   );
