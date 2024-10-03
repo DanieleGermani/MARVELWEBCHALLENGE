@@ -11,10 +11,12 @@ const App: React.FC = () => {
     <GlobalStateProvider>
       <Router>
         <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/character/:id" element={<CharacterDetail />} />
-        </Routes>
+        <div className="page-container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/character/:id" element={<CharacterDetail />} />
+          </Routes>
+        </div>
       </Router>
     </GlobalStateProvider>
   );
