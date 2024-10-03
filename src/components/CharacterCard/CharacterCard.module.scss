@@ -19,27 +19,16 @@
   }
   
   .cardFooter {
-    padding: 10px; /* Espaciado interno */
-    background-color: #000; /* Fondo negro para el pie */
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    padding: 10px;
+    background-color:#000000;
     color: white; /* Texto blanco */
     .characterName {
       margin: 0; /* Sin margen */
       font-size: 1.2em; /* Tamaño de la fuente */
       color: white; /* Texto blanco */
-    }
-
-    .viewDetailsButton {
-      background-color: #ff0055; /* Color de fondo del botón */
-      color: white; /* Texto blanco */
-      border: none; /* Sin borde */
-      border-radius: 5px; /* Bordes redondeados */
-      padding: 8px 12px; /* Espaciado interno del botón */
-      cursor: pointer; /* Cursor de puntero */
-      transition: background-color 0.3s; /* Transición suave */
-
-      &:hover {
-        background-color: #e6004d; /* Color al pasar el mouse */
-      }
     }
   }
 }
