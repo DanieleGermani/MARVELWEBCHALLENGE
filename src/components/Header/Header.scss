@@ -1,21 +1,22 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #000000;
-    width: 100%;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-  
-    .header-left {
-      .home-button {
-        cursor: pointer;
-      }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #000000;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  .header-left {
+    .home-button {
+      cursor: pointer;
     }
-  
-    .header-right {
+  }
+
+  .header-right {
+    > div {
       display: flex;
       gap: 10px;
       color: white;
@@ -24,4 +25,4 @@
       }
     }
   }
-  
+}
