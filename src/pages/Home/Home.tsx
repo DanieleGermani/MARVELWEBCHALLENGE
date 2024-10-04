@@ -48,8 +48,7 @@ const Home: React.FC = () => {
     <Favorites />
   ) : (
     <div className="home">
-      <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange} />
-      <div>{filteredCharacters.length} RESULTS</div>
+      <SearchBar searchTerm={searchTerm} result={filteredCharacters.length} onSearchChange={handleSearchChange} />
       <CharacterList characters={filteredCharacters} />
     </div>
   );
