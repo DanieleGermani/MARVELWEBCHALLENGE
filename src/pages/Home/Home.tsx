@@ -8,29 +8,37 @@ import { ICharacter } from "../../models/character.model";
 import { useGlobalState } from "../../context/GlobalState";
 
 const Home: React.FC = () => {
-  const { setCharactersList, charactersList, isFavoriteSelected } = useGlobalState(); 
-  const [filteredCharacters, setFilteredCharacters] = useState<ICharacter[]>([]);
+  const { setCharactersList, isFavoriteSelected } =
+    useGlobalState();
+  const [filteredCharacters, setFilteredCharacters] = useState<ICharacter[]>(
+    []
+  );
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);;
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getCharactersList()
-      .then((data) => {
-        setCharactersList(data);
-        setFilteredCharacters(data);
-      })
-      .catch(() => setError("Error getting characters"))
-      .finally(() => setLoading(false));
-          // Se omite setCharactersList en el array de dependencias porque es estable y no cambia entre renders
-  }, [setCharactersList]);
+    searchCharactersListByName();
+  }, []);
 
+  const searchCharactersListByName = async (term: string = '') => {
+    setLoading(true);
+    try {
+      const data = await getCharactersList(term); 
+      setCharactersList(data);
+      setFilteredCharacters(data);
+    } catch {
+      setError("Error al obtener personajes");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   const handleSearchChange = (term: string) => {
     setSearchTerm(term);
-    const filtered = charactersList.filter((character) =>
-      character.name.toLowerCase().includes(term.toLowerCase())
-    );
-    setFilteredCharacters(filtered);
+    setTimeout(() => {
+      searchCharactersListByName(term);
+    }, 1000);
   };
 
   if (isLoading) return <Loading />;
