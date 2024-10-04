@@ -15,8 +15,12 @@ const ComicsDetailList: React.FC<ComicsDetailListProps> = ({ comics, error }) =>
         {error ? (
           <p className="error-message">{error}</p>
         ) : (
-          comics.map((comic) => (
-            <div key={comic.id} className="comic-card">
+          comics.map((comic, index) => (
+            <div
+              key={comic.id}
+              className="comic-card"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
               <img
                 className="comic-image"
                 src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}

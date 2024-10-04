@@ -11,45 +11,66 @@ import ComicsDetailList from "../../components/ComicsDetailList/ComicsDetailList
 const CharacterDetail: React.FC = () => {
   const { charactersList } = useGlobalState();
   const { id } = useParams<{ id: string }>();
+
   const [character, setCharacter] = useState<ICharacter | null>(null);
   const [comics, setComics] = useState<IComic[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const fetchCharacter = async (id: string): Promise<ICharacter | null> => {
+    const cachedCharacter = charactersList.find(
+      (character: ICharacter) => character.id === Number(id)
+    ) || null;
+
+    if (cachedCharacter) {
+      return cachedCharacter;
+    } else {
+      try {
+        const fetchedCharacter = await getCharacterById(id);
+        return fetchedCharacter;
+      } catch {
+        setError("Error fetching character details");
+        return null;
+      }
+    }
+  };
+
+  const fetchComics = async (id: string): Promise<IComic[]> => {
+    try {
+      const comicsResponse = await getComicsById(id);
+      if (comicsResponse.length) {
+        return comicsResponse;
+      } else {
+        setError("Comics not found - Empty state");
+        return [];
+      }
+    } catch {
+      setError("Error fetching comics details");
+      return [];
+    }
+  };
+
+  const loadCharacterAndComics = async () => {
     setIsLoading(true);
     setError(null);
 
-    getComicsById(id as string)
-      .then((response: IComic[]) => {
-        if (response.length) {
-          setComics(response);
-        } else {
-          setError("Comics not found - Empty state");
-        }
-      })
-      .catch(() => {
-        setError("Error getting comics details");
-      })
-      .finally(() => {
-        const character = charactersList.find(
-          (character: ICharacter) => character.id === Number(id)
-        ) || null;
+    const [characterResponse, comicsResponse] = await Promise.all([
+      fetchCharacter(id as string),
+      fetchComics(id as string),
+    ]);
 
-        if (!character) {
-          setIsLoading(true);
-          getCharacterById(id as string)
-          .then(character => {
-            setCharacter(character);
-          }).finally(() => {
-            setIsLoading(false);
-          });
-        } else {
-          setCharacter(character);
-          setIsLoading(false);
-        }
-      });
-  }, [id, charactersList]);
+    if (characterResponse) {
+      setCharacter(characterResponse);
+    }
+    setComics(comicsResponse);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    if (id) {
+      loadCharacterAndComics();
+    }
+  }, [id]);
 
   if (isLoading) return <Loading />;
 

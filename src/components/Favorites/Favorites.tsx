@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useGlobalState } from '../../context/GlobalState';
-import CharacterCard from '../CharacterCard/CharacterCard';
-import './Favorites.module.scss';
-import styles from './Favorites.module.scss';
-import SearchBar from '../SearchBar/SearchBar';
-import { ICharacter } from '../../models/character.model';
+import React, { useEffect, useState } from "react";
+import { useGlobalState } from "../../context/GlobalState";
+import CharacterCard from "../CharacterCard/CharacterCard";
+import SearchBar from "../SearchBar/SearchBar";
+import { ICharacter } from "../../models/character.model";
+import styles from "./Favorites.module.scss";
 
 const Favorites: React.FC = () => {
-  const { favorites } = useGlobalState();
+  const { favorites } = useGlobalState(); 
   const [filteredFavorites, setFilteredFavorites] = useState<ICharacter[]>(favorites);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -15,7 +14,6 @@ const Favorites: React.FC = () => {
     setFilteredFavorites(favorites);
   }, [favorites]);
 
-  
   const handleSearchChange = (term: string) => {
     setSearchTerm(term);
     const filtered = favorites.filter((character) =>
@@ -25,17 +23,30 @@ const Favorites: React.FC = () => {
   };
 
   return (
-    <div className="favorites">
-      <SearchBar searchTerm={searchTerm} result={filteredFavorites.length} onSearchChange={handleSearchChange} />
-      <div className={styles.characterList}>
-        {filteredFavorites.length > 0 ? (
-          filteredFavorites.map((character) => (
-            <CharacterCard key={character.id} character={character} />
-          ))
-        ) : (
-          <p>No favorites yet.</p>
-        )}
-      </div>
+    <div className={styles.favorites}>
+      <h1>FAVORITES</h1>
+
+      {favorites.length > 0 ? (
+        <>
+          <SearchBar
+            searchTerm={searchTerm}
+            result={filteredFavorites.length}
+            onSearchChange={handleSearchChange}
+          />
+
+          {filteredFavorites.length > 0 ? (
+            <div className={styles.characterList}>
+              {filteredFavorites.map((character, index) => (
+                <CharacterCard delay={index} key={character.id} character={character} />
+              ))}
+            </div>
+          ) : (
+            <p>No matches found for "{searchTerm}".</p>
+          )}
+        </>
+      ) : (
+        <p>No favorites yet.</p>
+      )}
     </div>
   );
 };

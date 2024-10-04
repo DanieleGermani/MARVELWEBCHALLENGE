@@ -7,7 +7,9 @@ interface CharacterDetailHeaderProps {
   character: ICharacter;
 }
 
-const CharacterDetailHeader: React.FC<CharacterDetailHeaderProps> = ({ character }) => {
+const CharacterDetailHeader: React.FC<CharacterDetailHeaderProps> = ({
+  character,
+}) => {
   return (
     <div className="character-header-container">
       <div className="character-header">
@@ -21,9 +23,7 @@ const CharacterDetailHeader: React.FC<CharacterDetailHeaderProps> = ({ character
             <h1 className="character-name">{character.name}</h1>
             <FavoriteButton character={character} />
           </div>
-          {/* <p className="character-description">{character.description}</p>
-           */}
-           <p className="character-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt natus voluptatum nostrum unde error eaque totam accusantium, ullam assumenda modi quis? Ut illum quasi adipisci accusamus maiores distinctio consequatur nihil!</p>
+          <p className="character-description"> {character.description ? character.description : 'not description'}</p>
         </div>
       </div>
     </div>
