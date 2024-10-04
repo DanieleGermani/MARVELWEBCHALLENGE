@@ -8,14 +8,11 @@ const API_PRIVATE_KEY = process.env.REACT_APP_MARVEL_API_PRIVATE_KEY;
 const ts = new Date().getTime().toString();
 const hash = CryptoJS.MD5(ts + API_PRIVATE_KEY + API_PUBLIC_KEY).toString();
 
-export const getCharactersList = async (): Promise<ICharacter[]> => {
+export const getCharactersList = async (searchTerm: string = ''): Promise<ICharacter[]> => {
   try {
-    const cachedData = localStorage.getItem("charactersList");
-    if (cachedData) {
-      return JSON.parse(cachedData);
-    }
+    const params = searchTerm.length ? `nameStartsWith=${searchTerm}` : `limit=50&offset=50`
     const response = await fetch(
-      `${BASE_URL}/characters?ts=${ts}&apikey=${API_PUBLIC_KEY}&hash=${hash}&limit=50&offset=50`
+      `${BASE_URL}/characters?ts=${ts}&apikey=${API_PUBLIC_KEY}&hash=${hash}&${params}`
     );
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -54,6 +51,22 @@ export const getComicsById = async (id: string): Promise<IComic[]> => {
   } catch (error) {
     console.error('Error fetching comics:', error);
     return [];
+  }
+};
+
+export const getCharacterById = async (id: string): Promise<ICharacter | null> => {
+  try {
+    const response = await fetch(`${BASE_URL}/characters/${id}?ts=${ts}&apikey=${API_PUBLIC_KEY}&hash=${hash}`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch character: ${response.statusText}`);
+    }
+    
+    const { data } = await response.json();
+    return data.results.length > 0 ? data.results[0] : null;
+  } catch (error) {
+    console.error('Error fetching character:', error);
+    return null;
   }
 };
 
