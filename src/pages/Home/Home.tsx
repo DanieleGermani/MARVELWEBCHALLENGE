@@ -6,10 +6,10 @@ import Loading from "../../components/Loading/Loading";
 import Favorites from "../../components/Favorites/Favorites";
 import { ICharacter } from "../../models/character.model";
 import { useGlobalState } from "../../context/GlobalState";
+import '../../styles/global.scss'
 
 const Home: React.FC = () => {
-  const { setCharactersList, isFavoriteSelected } =
-    useGlobalState();
+  const { setCharactersList, isFavoriteSelected } = useGlobalState();
   const [filteredCharacters, setFilteredCharacters] = useState<ICharacter[]>(
     []
   );
@@ -21,10 +21,10 @@ const Home: React.FC = () => {
     searchCharactersListByName();
   }, []);
 
-  const searchCharactersListByName = async (term: string = '') => {
+  const searchCharactersListByName = async (term: string = "") => {
     setLoading(true);
     try {
-      const data = await getCharactersList(term); 
+      const data = await getCharactersList(term);
       setCharactersList(data);
       setFilteredCharacters(data);
     } catch {
@@ -33,7 +33,7 @@ const Home: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   const handleSearchChange = (term: string) => {
     setSearchTerm(term);
     setTimeout(() => {
@@ -44,12 +44,20 @@ const Home: React.FC = () => {
   if (isLoading) return <Loading />;
   if (error) return <p>{error}</p>;
 
-  return isFavoriteSelected ? (
-    <Favorites />
-  ) : (
-    <div className="home">
-      <SearchBar searchTerm={searchTerm} result={filteredCharacters.length} onSearchChange={handleSearchChange} />
-      <CharacterList characters={filteredCharacters} />
+  return (
+    <div className="page-container">
+      {isFavoriteSelected ? (
+        <Favorites />
+      ) : (
+        <div className="home">
+          <SearchBar
+            searchTerm={searchTerm}
+            result={filteredCharacters.length}
+            onSearchChange={handleSearchChange}
+          />
+          <CharacterList characters={filteredCharacters} />
+        </div>
+      )}
     </div>
   );
 };

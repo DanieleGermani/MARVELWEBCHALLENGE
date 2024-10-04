@@ -54,6 +54,22 @@ export const getComicsById = async (id: string): Promise<IComic[]> => {
   }
 };
 
+export const getCharacterById = async (id: string): Promise<ICharacter | null> => {
+  try {
+    const response = await fetch(`${BASE_URL}/characters/${id}?ts=${ts}&apikey=${API_PUBLIC_KEY}&hash=${hash}`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch character: ${response.statusText}`);
+    }
+    
+    const { data } = await response.json();
+    return data.results.length > 0 ? data.results[0] : null;
+  } catch (error) {
+    console.error('Error fetching character:', error);
+    return null;
+  }
+};
+
 const sortComicsByDate = (results: IComic[]): IComic[] => {
   return results.sort((a: IComic, b: IComic) => {
     const dateA = new Date(a.dates.find(date => date.type === 'onsaleDate')?.date || '');
