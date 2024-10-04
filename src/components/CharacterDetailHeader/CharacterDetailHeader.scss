@@ -1,0 +1,49 @@
+.character-header-container {
+  background-color: black;
+  color: #ffffff;
+  position: relative;
+  .character-header {
+    max-width: 1200px;
+    display: flex;
+    margin: auto;
+    .character-image {
+      width: 320px;
+      height: 320px;
+      margin-right: 20px;
+    }
+
+    .character-info {
+      padding: 48px 0px 48px 48px;
+      flex: auto;
+
+      .header-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .character-name {
+          font-size: 40px;
+          font-weight: 700;
+          line-height: 46.88px;
+          text-align: left;
+        }
+      }
+      .character-description {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 18.75px;
+        text-align: left;
+        color: #ffffff;
+      }
+    }
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-left: 24px solid transparent;
+    border-bottom: 24px solid#FFFFFF;
+  }
+}

@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import { getCharacterById, getComicsById } from "../../services/marvelApi";
 import { ICharacter } from "../../models/character.model";
 import Loading from "../../components/Loading/Loading";
-import FavoriteButton from "../../components/FavoriteButton/FavoriteButton";
 import { IComic } from "../../models/comic.modal";
 import { useGlobalState } from "../../context/GlobalState";
-import "./CharacterDetail.scss";
+import CharacterDetailHeader from "../../components/CharacterDetailHeader/CharacterDetailHeader";
+import ComicsDetailList from "../../components/ComicsDetailList/ComicsDetailList";
 
 const CharacterDetail: React.FC = () => {
   const { charactersList } = useGlobalState();
@@ -16,17 +16,10 @@ const CharacterDetail: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const getCharacter = () => {
-    return charactersList.find(
-      (character: ICharacter) => character.id === Number(id)
-    ) || null;
-  };
-
   useEffect(() => {
     setIsLoading(true);
     setError(null);
 
-    // Get comics first
     getComicsById(id as string)
       .then((response: IComic[]) => {
         if (response.length) {
@@ -39,23 +32,22 @@ const CharacterDetail: React.FC = () => {
         setError("Error getting comics details");
       })
       .finally(() => {
-        // Try to get the character from the global state
-        const foundCharacter = getCharacter();
-        if (!foundCharacter) {
-          // If character is not found in the state, fetch from API
-          getCharacterById(id as string)
-            .then((fetchedCharacter) => {
-              setCharacter(fetchedCharacter);
-            })
-            .catch(() => {
-              setError("Error fetching character details");
-            });
-        } else {
-          // If found, set the character
-          setCharacter(foundCharacter);
-        }
+        const character = charactersList.find(
+          (character: ICharacter) => character.id === Number(id)
+        ) || null;
 
-        setIsLoading(false);
+        if (!character) {
+          setIsLoading(true);
+          getCharacterById(id as string)
+          .then(character => {
+            setCharacter(character);
+          }).finally(() => {
+            setIsLoading(false);
+          });
+        } else {
+          setCharacter(character);
+          setIsLoading(false);
+        }
       });
   }, [id, charactersList]);
 
@@ -65,42 +57,8 @@ const CharacterDetail: React.FC = () => {
     <div className="character-detail">
       {character ? (
         <>
-          <div className="character-header-container">
-            <div className="character-header">
-              <img
-                className="character-image"
-                src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
-                alt={character.name}
-              />
-              <div className="character-info">
-                <div className="header-title">
-                  <h1 className="character-name">{character.name}</h1>
-                  <FavoriteButton character={character} />
-                </div>
-                <p className="character-description">{character.description}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="character-comics">
-            <h2>Comics</h2>
-            <div className="comics-list">
-              {error ? (
-                <p className="error-message">{error}</p>
-              ) : (
-                comics.map((comic) => (
-                  <div key={comic.id} className="comic-card">
-                    <img
-                      className="comic-image"
-                      src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
-                      alt={comic.title}
-                    />
-                    <p className="comic-title">{comic.title}</p>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
+          <CharacterDetailHeader character={character} />
+          <ComicsDetailList comics={comics} error={error} />
         </>
       ) : (
         <p>Character not found</p>
