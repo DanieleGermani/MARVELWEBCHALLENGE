@@ -36,8 +36,8 @@ const Favorites: React.FC = () => {
 
           {filteredFavorites.length > 0 ? (
             <div className={styles.characterList}>
-              {filteredFavorites.map((character) => (
-                <CharacterCard key={character.id} character={character} />
+              {filteredFavorites.map((character, index) => (
+                <CharacterCard delay={index} key={character.id} character={character} />
               ))}
             </div>
           ) : (
