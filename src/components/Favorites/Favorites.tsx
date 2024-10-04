@@ -26,6 +26,7 @@ const Favorites: React.FC = () => {
 
   return (
     <div className="favorites">
+      <h1>FAVORITES</h1>
       <SearchBar searchTerm={searchTerm} result={filteredFavorites.length} onSearchChange={handleSearchChange} />
       <div className={styles.characterList}>
         {filteredFavorites.length > 0 ? (
